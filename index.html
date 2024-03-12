@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Management Simulation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    #quiz-container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .question {
+      margin-bottom: 10px;
+    }
+
+    .options {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .option {
+      margin-bottom: 5px;
+    }
+
+    #submit-btn {
+      display: block;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="quiz-container">
+  <h1>Password Management Simulation</h1>
+  <div id="quiz"></div>
+  <button id="submit-btn" onclick="submitQuiz()">Submit</button>
+</div>
+
+<script>
+  const questions = [
+    {
+      question: "1. What is the recommended minimum length for a strong password?",
+      options: ["6 characters", "8 characters", "12 characters", "16 characters"],
+      correctAnswer: "12 characters"
+    },
+    {
+      question: "2. Which of the following is a strong password?",
+      options: ["password123", "P@ssw0rd", "abc123", "letmein"],
+      correctAnswer: "P@ssw0rd"
+    },
+    {
+      question: "3. How often should you change your passwords?",
+      options: ["Every day", "Once a week", "Once a month", "Every 6 months"],
+      correctAnswer: "Every 6 months"
+    },
+    {
+      question: "4. What is a passphrase?",
+      options: ["A sequence of numbers", "A combination of special characters", "A series of random letters", "A long, memorable sentence"],
+      correctAnswer: "A long, memorable sentence"
+    },
+    {
+      question: "5. Why is it important to avoid using easily guessable information in passwords?",
+      options: ["It's not important", "It makes passwords easier to remember", "It increases security", "It's more fun"],
+      correctAnswer: "It increases security"
+    },
+    {
+      question: "6. What is the purpose of using a password manager?",
+      options: ["To remember your passwords for you", "To create weak passwords", "To store passwords in a text file", "To make passwords visible to others"],
+      correctAnswer: "To remember your passwords for you"
+    },
+    {
+      question: "7. Should you use the same password for multiple accounts?",
+      options: ["Yes, it's convenient", "No, it's a security risk", "Only for unimportant accounts", "It depends on the website"],
+      correctAnswer: "No, it's a security risk"
+    },
+    {
+      question: "8. What is two-factor authentication (2FA)?",
+      options: ["Using two different passwords", "Using two or more authentication methods", "Changing passwords twice a day", "Logging in twice"],
+      correctAnswer: "Using two or more authentication methods"
+    },
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function loadQuestion() {
+    const quiz = document.getElementById("quiz");
+    const currentQ = questions[currentQuestion];
+
+    quiz.innerHTML = `
+      <div class="question">${currentQ.question}</div>
+      <ul class="options">
+        ${currentQ.options.map((option, index) => `<li class="option"><input type="radio" name="option" value="${option}"> ${option}</li>`).join('')}
+      </ul>
+    `;
+  }
+
+  function submitQuiz() {
+    const selectedOption = document.querySelector('input[name="option"]:checked');
+    if (!selectedOption) {
+      alert("Please select an option.");
+      return;
+    }
+
+    const answer = selectedOption.value;
+    const currentQ = questions[currentQuestion];
+
+    if (answer === currentQ.correctAnswer) {
+      score++;
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    const quizContainer = document.getElementById("quiz-container");
+    quizContainer.innerHTML = `
+      <h2>Simulation Completed</h2>
+      <p>Your score: ${score} out of ${questions.length}</p>
+      <p>Thank you for completing the Password Management Simulation!</p>
+    `;
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>
